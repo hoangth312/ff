@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Live Stream</title>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+</head>
+<body>
+  <video id="video" controls autoplay></video>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var video = document.getElementById('video');
+      if (Hls.isSupported()) {
+        var hls = new Hls();
+        hls.loadSource('output.m3u8');
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, function () {
+          video.play();
+        });
+        hls.on(Hls.Events.LEVEL_LOADED, function (event, data) {
+          if (data.details.live) {
+            // Seek to edge to ensure playback at the most recent segment
+            var edge = video.seekable.end(0);
+            video.currentTime = edge - 5;  // Start playback 5 seconds from the live edge
+          }
+        });
+      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = 'output.m3u8';
+        video.addEventListener('loadedmetadata', function() {
+          video.play();
+        });
+      }
+    });
+  </script>
+</body>
+</html>
