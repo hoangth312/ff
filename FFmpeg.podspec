@@ -135,6 +135,6 @@ Connect SDK is an open source framework that connects your mobile apps with mult
 
   # spec.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   # spec.dependency "JSONKit", "~> 1.4"
-  spec.vendored_frameworks = 'ffmpeg-kit-full-6.0-ios-xcframework'
+  spec.vendored_frameworks = 'ffmpegkit.xcframework', 'libavdevice.xcframework', 'libavfilter.xcframework', 'libavformat.xcframework', 'libavutil.xcframework', 'libswresample.xcframework', 'libswscale.xcframework'
 
 end
